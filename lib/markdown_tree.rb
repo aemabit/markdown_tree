@@ -4,6 +4,10 @@ require "markdown_tree/railtie" if defined?(Rails)
 
 module MarkdownTree
   class << self
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
     def generate_tree(directory = nil)
       directory ||= configuration.root_directory || Dir.pwd
 
@@ -32,15 +36,5 @@ module MarkdownTree
         end
       end
     end
-
-    def configuration
-      @configuration ||= Configuration.new
-    end
-  end
-
-  configure do |config|
-    config.exclude_list = ["node_modules", ".git", ".DS_Store"]
-    config.root_directory = Dir.pwd
-    config.output_file = "directory_structure.md"
   end
 end
